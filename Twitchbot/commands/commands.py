@@ -13,12 +13,6 @@ class Commands:
     def __init__(self, bot: TwitchBot):
         self.bot = bot
 
-    @command(name='test')
-    async def test(self, ctx: Context):
-        if not self.bot.pre_command(ctx, command='test', owner_check=True):
-            return
-        await ctx.send('test passed!')
-
     @command(name='discord')
     async def discord(self, ctx: Context):
         if not self.bot.pre_command(ctx, command='discord'):

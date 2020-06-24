@@ -1,7 +1,9 @@
-from twitchio import Context, Message
-from config.config import nickname, owner
+from twitchio import Message
+from twitchio.errors import HTTPException
+
+from config.config import nickname, owner, prefix
 from config.constants import TEXT
-from core.reactions import react_with_text
+from core.reactions import react_with_text, talk
 
 
 def listener_setup(bot):
@@ -25,7 +27,12 @@ def listener_setup(bot):
         if message.content.startswith('>'):
             return
 
-        r = react_with_text(message.content, message.channel.name, message.author.id)
+        try:
+            channel_id = (await bot.get_users(message.channel.name))[0]
+        except HTTPException:
+            channel_id = 0
+        r = react_with_text(message.content, channel_id, message.author.id) or \
+            talk(message.content, channel_id, prefix, message.author.id)
         t = r.get(TEXT)
         if t:
             await message.channel.send(t)

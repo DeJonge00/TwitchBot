@@ -1,5 +1,3 @@
-from config.config import nickname, owner
-
 TEXT = 'text_message'
 ERROR = 'error_message'
 
@@ -9,9 +7,9 @@ BIRIid = 546311880
 DOGEid = -1
 
 # Whitelists
-s_to_ringels_whitelist = [nickname, owner]
-auto_name_change_whitelist = [nickname, owner]
-nickname_change_whitelist = [nickname, owner]
+s_to_ringels_whitelist = [BIRIid, NYAid]
+auto_name_change_whitelist = [BIRIid, NYAid]
+nickname_change_whitelist = [BIRIid, NYAid]
 image_spam_protection_removal = []
 
 # Blacklists
