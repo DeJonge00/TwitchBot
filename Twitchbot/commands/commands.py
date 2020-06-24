@@ -4,7 +4,7 @@ from twitchio.ext.commands.core import cog
 
 from TwitchBot import TwitchBot
 from commands.basic_commands import TEXT, command_cast, command_compliment, command_kiss, command_kill, command_nice, \
-    command_quote
+    command_quote, command_face, command_hug
 from config.config import discord_invite_link
 
 
@@ -21,7 +21,7 @@ class Commands:
 
     @command(name='cast')
     async def cast(self, ctx: Context, *args):
-        if not self.bot.pre_command(ctx, command='cast', owner_check=True):
+        if not self.bot.pre_command(ctx, command='cast'):
             return
         r = command_cast(args, ctx.author.display_name).get(TEXT)
         if r:
@@ -29,15 +29,31 @@ class Commands:
 
     @command(name='compliment')
     async def compliment(self, ctx: Context):
-        if not self.bot.pre_command(ctx, command='compliment', owner_check=True):
+        if not self.bot.pre_command(ctx, command='compliment'):
             return
         r = command_compliment(ctx.author.display_name).get(TEXT)
         if r:
             await ctx.send(r.replace('*', ''))
 
+    @command(name='face')
+    async def face(self, ctx: Context):
+        if not self.bot.pre_command(ctx, command='face'):
+            return
+        r = command_face().get(TEXT)
+        if r:
+            await ctx.send(r)
+
+    @command(name='hug')
+    async def hug(self, ctx: Context, *args):
+        if not self.bot.pre_command(ctx, command='hug'):
+            return
+        r = command_hug(ctx.author.display_name, ' '.join(args)).get(TEXT)
+        if r:
+            await ctx.send(r.replace('*', ''))
+
     @command(name='kiss')
     async def kiss(self, ctx: Context, *args):
-        if not self.bot.pre_command(ctx, command='kiss', owner_check=True):
+        if not self.bot.pre_command(ctx, command='kiss'):
             return
         r = command_kiss(ctx.author.display_name, ' '.join(args)).get(TEXT)
         if r:
@@ -45,7 +61,7 @@ class Commands:
 
     @command(name='kill')
     async def kill(self, ctx: Context, *args):
-        if not self.bot.pre_command(ctx, command='kill', owner_check=True):
+        if not self.bot.pre_command(ctx, command='kill'):
             return
         r = command_kill(ctx.author.display_name, ' '.join(args)).get(TEXT)
         if r:
@@ -53,7 +69,7 @@ class Commands:
 
     @command(name='nice')
     async def nice(self, ctx: Context):
-        if not self.bot.pre_command(ctx, command='nice', owner_check=True):
+        if not self.bot.pre_command(ctx, command='nice'):
             return
         r = command_nice(ctx.author.display_name, ctx.author.id).get(TEXT)
         if r:
@@ -61,7 +77,7 @@ class Commands:
 
     @command(name='quote')
     async def quote(self, ctx: Context):
-        if not self.bot.pre_command(ctx, command='quote', owner_check=True):
+        if not self.bot.pre_command(ctx, command='quote'):
             return
         r = command_quote().get(TEXT)
         if r:

@@ -64,8 +64,12 @@ def command_emojify(args: [str]):
     return {TEXT: ' '.join([convert_char(c) for c in text])}
 
 
+def command_face():
+    return {TEXT: random.choice(command_text.faces)}
+
+
 def command_hug(author: str, target: str):
-    return random.choice(command_text.hug).format(u=[author, target])
+    return {TEXT: random.choice(command_text.hug).format(u=[author, target])}
 
 
 def command_kill(author: str, target: str):
