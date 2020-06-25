@@ -2,13 +2,13 @@
 
 ### Reactions to messages
 
-|Message                                |Reaction                           |Reaction disable command
-|---                                    |---                                |---
-|`\o/`                                  |Praise the sun!                    |`togglecommand server \\o/` or `togglecommand channel \\o/`
-|`(╯°□°）╯︵ ┻━┻`                        | `┬─┬ ノ( ゜-゜ノ)`                 |`togglecommand server tableflip` or `togglecommand channel tableflip`
-|`ayy`                                  |`lmao`                             |`togglecommand server ayy` or `togglecommand channel ayy`
-|`lenny`                                |`( ͡° ͜ʖ ͡°)`                      |`togglecommand server response_lenny` or `togglecommand channel response_lenny`
-|Mentions, `Biri` or `Biribiri`         |I will talk to your lonely self    |`togglecommand server talk` or `togglecommand channel talk`
+|Message                                |Reaction
+|---                                    |---
+|`\o/`                                  |Praise the sun!
+|`(╯°□°）╯︵ ┻━┻`                        | `┬─┬ ノ( ゜-゜ノ)`
+|`ayy`                                  |`lmao`
+|`lenny`                                |`( ͡° ͜ʖ ͡°)`
+|Mentions, `Biri` or `Biribiri`         |I will talk to your lonely self
 
 ### Basic commands
 
