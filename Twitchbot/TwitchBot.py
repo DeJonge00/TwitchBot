@@ -2,6 +2,7 @@ from core.bot import TwitchBot
 
 START_COG_MESSAGE = 'Cog started: {}'
 cogs = [
+    'core.listeners',
     'commands.commands',
     'commands.admin'
 ]

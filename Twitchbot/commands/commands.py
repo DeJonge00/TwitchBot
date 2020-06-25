@@ -4,7 +4,7 @@ from twitchio.ext.commands.core import cog
 
 from TwitchBot import TwitchBot
 from commands.basic_commands import TEXT, command_cast, command_compliment, command_kiss, command_kill, command_nice, \
-    command_quote, command_face, command_hug
+    command_quote, command_face, command_hug, command_uptime
 from config.config import discord_invite_link
 
 
@@ -83,6 +83,10 @@ class Commands:
         if r:
             await ctx.send(r)
 
-
-def commands_setup(bot):
-    bot.add_cog(Commands(bot))
+    @command(name='uptime')
+    async def uptime(self, ctx: Context):
+        if not self.bot.pre_command(ctx, command='uptime'):
+            return
+        r = command_uptime(self.bot.start_time).get(TEXT)
+        if r:
+            await ctx.send(r)

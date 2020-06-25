@@ -1,5 +1,6 @@
 import hashlib
 import random
+from datetime import datetime
 
 import requests
 
@@ -101,3 +102,20 @@ def command_quote():
     if r.get('quoteAuthor'):
         m += '({})'.format(r.get('quoteAuthor'))
     return {TEXT: m}
+
+
+def hours_minutes_seconds(td):
+    return td.seconds // 3600, (td.seconds // 60) % 60, td.seconds % 60
+
+
+def command_uptime(start_time):
+    up_time = datetime.utcnow() - start_time
+    hours, mins, secs = hours_minutes_seconds(up_time)
+    t = []
+    if hours > 0:
+        t.append('{} hour{}'.format(hours, '' if hours == 1 else 's'))
+    if mins > 0:
+        t.append('{} minute{}'.format(mins, '' if mins == 1 else 's'))
+    if secs > 0:
+        t.append('{} second{}'.format(secs, '' if secs == 1 else 's'))
+    return {TEXT: 'I have been active for {} now'.format(', '.join(t))}

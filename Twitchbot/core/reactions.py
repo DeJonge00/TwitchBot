@@ -37,7 +37,7 @@ def react_with_text(message: str, streamer_channel: int, author_id: int):
     return {}
 
 
-def talk(message: str, guild_id: int, prefix: str, author_id: int):
+def talk(message: str, guild_id: int, prefix: str, author_id: int, author: str):
     """
     React to a message that talks to me using a name from the secrets file.
     :param message: The message to respond to.
@@ -49,6 +49,9 @@ def talk(message: str, guild_id: int, prefix: str, author_id: int):
     if not (len(message) < 2 or (message[:2] == '<@') or (
             message[0].isalpha() and message[1].isalpha())) or guild_id in constants.bot_talk_blacklist:
         return {}
+
+    if message.lower() in ['hello', 'hi', 'good morning', 'hey']:
+        return {TEXT: 'Good morning {}'.format(author)}
 
     if (len(set(message.lower().translate(str.maketrans('', '', string.punctuation)).split(" ")).intersection(
             set(bot_names))) > 0):
