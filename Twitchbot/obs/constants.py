@@ -35,3 +35,9 @@ SHADER_PIXELATE = 'pixelation.shader'
 SHADER_RAINBOW = 'rainbow.shader'
 SHADER_COLOR_WHEEL = 'rgb_color_wheel.shader'
 SHADER_SCAN_LINE = 'scan_line.shader'
+
+SCENE_GAME = 'Active Game Capture'
+SCENE_CHATTING = 'Just Chatting'
+SCENE_TRANSITION = 'Transition'
+
+SCENES = {SCENE_GAME, SCENE_CHATTING, SCENE_TRANSITION}
