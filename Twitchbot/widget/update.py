@@ -18,12 +18,12 @@ def update_html(bot: TwitchBot, channel: str):
             ]:
                 format_vars[k] = v
 
-    format_vars["followers_nr"] = len(await bot.get_followers(channel))
-    format_vars["subscribers_nr"] = len(await bot.get_chatters(channel))
+    # format_vars["followers_nr"] = len(await bot.get_followers(channel))
+    # format_vars["subscribers_nr"] = len(await bot.get_chatters(channel))
 
     # Apply vars to html
-    with open(widget_path + widget_template, 'r') as f:
-        text = f.read()
-    text = text.format(*format_vars)
-    with open(widget_path + widget_file, 'w') as f:
-        f.write(text)
+    # with open(widget_path + widget_template, 'r') as f:
+    #     text = f.read()
+    # text = text.format(*format_vars)
+    # with open(widget_path + widget_file, 'w') as f:
+    #     f.write(text)

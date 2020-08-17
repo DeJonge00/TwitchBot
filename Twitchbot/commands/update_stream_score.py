@@ -67,7 +67,7 @@ class WidgetCommands:
             s = self.bot.scores.get(ctx.channel.name, "There is no active score at the moment")
             await ctx.send(s)
             return
-        if not self.bot.pre_command(ctx, command='score', mod=True):
+        if not self.bot.pre_command(ctx, command='score', mod_check=True):
             return
 
         if len(args) <= 0:

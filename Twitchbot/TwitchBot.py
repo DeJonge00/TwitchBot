@@ -7,7 +7,8 @@ cogs = [
     'core.listeners',
     'commands.commands',
     'commands.admin',
-    'commands.update_stream_score'
+    'commands.update_stream_score',
+    'commands.obs_interaction'
 ]
 
 
@@ -22,7 +23,7 @@ def create_bot():
         bot.load_module(cog)
         print(START_COG_MESSAGE.format(cog))
 
-    bot.loop.create_task(bot_loop(bot=bot))
+    # bot.loop.create_task(bot_loop(bot=bot))
     return bot
 
 

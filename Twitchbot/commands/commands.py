@@ -2,10 +2,10 @@ from twitchio import Context
 from twitchio.ext.commands import command
 from twitchio.ext.commands.core import cog
 
-from TwitchBot import TwitchBot
 from commands.basic_commands import TEXT, command_cast, command_compliment, command_kiss, command_kill, command_nice, \
     command_quote, command_face, command_hug, command_uptime
 from config.config import discord_invite_link
+from core.bot import TwitchBot
 
 
 @cog()
