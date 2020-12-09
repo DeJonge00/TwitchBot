@@ -2,7 +2,6 @@ from simpleobsws import obsws
 
 
 async def get_source_settings(ws: obsws, source: str, type: str = None):
-    print(ws)
     r = await ws.call(
         'GetSourceSettings',
         {
@@ -26,3 +25,16 @@ async def set_source_settings(ws: obsws, source: str, type: str, settings: dict)
             'sourceSettings': settings
         }
     )
+
+
+async def set_source_location(ws: obsws, source: str, x: int = 0, y: int = 0):
+    r = await ws.call(
+        'SetSourceSettings',
+        {
+            'sourceName': source,
+            'sourceSettings': {
+                'left': 100
+            }
+        }
+    )
+    print("Set source location for '{}'\nResponse: {}".format(source, r))

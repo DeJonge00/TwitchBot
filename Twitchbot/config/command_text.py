@@ -1,3 +1,13 @@
+water_notification = "Stay hydrated! Drink some water.. please.."
+announcements = [
+    water_notification,
+    "Don't forget to follow if you like what you see!",
+    "Take a look below the stream for more information about bot commands",
+    "Did you know you can change the stream layout using just a command?",
+    "Need anything at all? Join our discord:\nhttps://discord.gg/KBxRd7x",
+    "HONK"
+]
+
 # talking to bb
 qa = [
     "What are you asking me for?",

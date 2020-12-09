@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from asyncio import Semaphore
 
 from simpleobsws import obsws
 from twitchio import Context
@@ -12,6 +13,10 @@ class TwitchBot(Bot):
     def __init__(self):
         self.start_time = datetime.utcnow()
         self.command_timeouts = {}
+        self.playing_audio = {
+            'semaphore': Semaphore(),
+            'time': datetime.utcnow()
+        }
 
         super(TwitchBot, self).__init__(
             irc_token=password,

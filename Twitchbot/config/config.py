@@ -5,7 +5,7 @@ owner_ids = [owner_id]
 
 # Bot init info
 nickname = 'inquisitorbiribiri'
-prefix = '>'
+prefix = ['>', '!']
 bot_names = ['biribiri', 'biri', 'thotbot']
 discord_invite_link = 'https://discord.gg/KBxRd7x'
 active_channels = [owner]
@@ -19,3 +19,6 @@ widget_file = 'score_actual.html'
 blacklist = {
     owner: ['kill']
 }
+
+# Sounds
+sound_files_path = './core/sound-files/'

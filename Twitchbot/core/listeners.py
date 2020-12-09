@@ -1,18 +1,24 @@
 import asyncio
 from datetime import datetime
+from random import choice
 
-from twitchio import Message, Channel, User
-from twitchio.errors import HTTPException
+from playsound import playsound
+from twitchio import Message, User
 from twitchio.ext.commands.core import cog
 
-from config.config import nickname, owner, prefix, active_channels
-from config.constants import TEXT, BIRIid
+from config.command_text import water_notification, announcements
+from config.config import nickname, owner, prefix, active_channels, sound_files_path
+from config.constants import TEXT, BIRIid, AUDIO, NYAid
 from core.reactions import react_with_text, talk
+from core.sound_reactions import react_with_audio
 
 
 async def water_reminder(channel):
-    await channel.send('Stay hydrated! Drink some water.. please..')
+    await channel.send(water_notification)
 
+
+async def random_announcement(channel):
+    await channel.send(choice(announcements))
 
 
 @cog()
@@ -25,9 +31,9 @@ class Listeners:
         print('Time-loop started')
         while True:
             time = datetime.utcnow()
-            if (time.minute - self.bot.start_time.minute) % 15 == 0:
+            if (time.minute - self.bot.start_time.minute) % 10 == 0:
                 for channel in [self.bot.get_channel(c) for c in active_channels]:
-                    await water_reminder(channel=channel)
+                    await random_announcement(channel=channel)
             end_time = datetime.utcnow()
             await asyncio.sleep(60 - end_time.second)
 
@@ -52,18 +58,26 @@ class Listeners:
 
         await self.bot.handle_commands(message)
 
-        if message.content.startswith('>'):
+        if not message.content or message.content[0] in ['>', '!']:
             return
 
-        try:
-            channel_id = (await self.bot.get_users(message.channel.name))[0]
-        except HTTPException:
-            channel_id = 0
+        # TODO See if this can be fixed?
+        # try:
+        #     channel_id = (await self.bot.get_users(message.channel.name))[0]
+        # except HTTPException:
+        channel_id = NYAid
         r = react_with_text(message.content, channel_id, message.author.id) or \
-            talk(message.content, channel_id, prefix, message.author.id, message.author.display_name)
+            talk(message.content, channel_id, prefix, message.author.id, message.author.display_name) or \
+            react_with_audio(self.bot, message.content, channel_id, message.author.id)
         t = r.get(TEXT)
+        a = r.get(AUDIO)
         if t:
             await message.channel.send(t)
+        if a:
+            await self.bot.playing_audio.get('semaphore').acquire()
+            self.bot.playing_audio['time'] = datetime.utcnow()
+            playsound(sound_files_path + a)
+            self.bot.playing_audio.get('semaphore').release()
 
     async def event_join(self, user: User):
         if not user.id:
