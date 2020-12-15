@@ -24,10 +24,12 @@ async def request(ws: obsws, function, *args):
 
 
 async def multi_request(ws: obsws, functions: [], args: []):
+    results = []
     await ws.connect()
     for f, a in zip(functions, args):
-        await exec_func(ws, f, a)
+        results.append(await exec_func(ws, f, a))
     await ws.disconnect()
+    return results
 
 
 async def get_source_filter_info(ws: obsws, source: str, filter: str):

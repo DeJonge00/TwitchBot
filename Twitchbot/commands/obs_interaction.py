@@ -12,7 +12,9 @@ from obs.constants import COLORS, SCENES
 from obs.obs_websocket import request, multi_request
 from obs.scrolling_announcement import setup_scrolling_announcement, scrolling_announcement
 from obs.types.filters.scroll import remove_scroll_filter
-from obs.types.scenes import set_scene
+from obs.types.scenes import set_scene, get_curent_scene
+from obs.types.source import get_source_settings, set_source_settings
+from obs.types.sources.text import change_text
 
 
 async def command_announce(ws: obsws, args: [str], author_name: str):
@@ -44,6 +46,27 @@ async def command_scene(bot: TwitchBot, scene: [str]) -> dict:
     return {TEXT: "Scene changed to '{}'!".format(scene)}
 
 
+async def command_meme(bot: TwitchBot, text: str = 'POG'):
+    if not text:
+        return {TEXT: "Text not found, aborting"}
+    scene = await request(ws=bot.obs_websocket, function=get_curent_scene)
+    name = scene.get('name', 'Just Chatting')
+    if scene.get('sources', None):
+        type = scene.get('sources', [])[0].get('type')
+    await multi_request(bot.obs_websocket,
+                        [change_text, set_source_settings, set_scene],
+                        [
+                            ['BlackBorderMemeTopLabel', text],
+                            ['SceneMirror', 'streamfx-source-mirror', {
+                                'Source.Mirror.Source': name
+                            }],
+                            ['BlackBorderTextMeme']
+                        ])
+    await sleep(8)
+    await request(bot.obs_websocket, set_scene, name)
+    return {TEXT: "Meme activated with text '{}'!".format(text)}
+
+
 @cog()
 class OBSCommands:
     def __init__(self, bot: TwitchBot):
@@ -68,5 +91,13 @@ class OBSCommands:
         if not self.bot.pre_command(ctx, command='scene', mod_check=True, timeout=1):
             return
         r = (await command_scene(self.bot, scene=args)).get(TEXT)
+        if r:
+            await ctx.send(r.replace('*', ''))
+
+    @command(name='meme')
+    async def scene(self, ctx: Context, *args):
+        if not self.bot.pre_command(ctx, command='meme', mod_check=True, timeout=1):
+            return
+        r = (await command_meme(self.bot, text=' '.join(args))).get(TEXT)
         if r:
             await ctx.send(r.replace('*', ''))
