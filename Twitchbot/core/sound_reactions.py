@@ -5,8 +5,8 @@ from core.bot import TwitchBot
 
 
 def react_with_audio(bot: TwitchBot, message: str, streamer_channel: int, author_id: int):
-    if bot.playing_audio.get('semaphore').locked() or \
-            (datetime.utcnow() - bot.playing_audio.get('time')).seconds < 1:
+    if bot.timer.get('semaphore').locked() or \
+            (datetime.utcnow() - bot.timer.get('time')).seconds < 1:
         return {}
 
     if streamer_channel not in audio_whitelist:

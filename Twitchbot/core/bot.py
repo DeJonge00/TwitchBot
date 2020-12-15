@@ -13,7 +13,7 @@ class TwitchBot(Bot):
     def __init__(self):
         self.start_time = datetime.utcnow()
         self.command_timeouts = {}
-        self.playing_audio = {
+        self.timer = {
             'semaphore': Semaphore(),
             'time': datetime.utcnow()
         }

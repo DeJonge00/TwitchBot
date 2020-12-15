@@ -74,10 +74,10 @@ class Listeners:
         if t:
             await message.channel.send(t)
         if a:
-            await self.bot.playing_audio.get('semaphore').acquire()
-            self.bot.playing_audio['time'] = datetime.utcnow()
+            await self.bot.timer.get('semaphore').acquire()
             playsound(sound_files_path + a)
-            self.bot.playing_audio.get('semaphore').release()
+            self.bot.timer['time'] = datetime.utcnow()
+            self.bot.timer.get('semaphore').release()
 
     async def event_join(self, user: User):
         if not user.id:

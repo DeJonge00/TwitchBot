@@ -1,4 +1,5 @@
 from asyncio import sleep
+from datetime import datetime
 
 from simpleobsws import obsws
 from twitchio import Context
@@ -47,8 +48,11 @@ async def command_scene(bot: TwitchBot, scene: [str]) -> dict:
 
 
 async def command_meme(bot: TwitchBot, text: str = 'POG'):
+    if (datetime.utcnow() - bot.timer.get('time')).seconds < 1:
+        return {}
     if not text:
         return {TEXT: "Text not found, aborting"}
+    await bot.timer.get('semaphore').acquire()
     scene = await request(ws=bot.obs_websocket, function=get_curent_scene)
     name = scene.get('name', 'Just Chatting')
     if scene.get('sources', None):
@@ -64,6 +68,8 @@ async def command_meme(bot: TwitchBot, text: str = 'POG'):
                         ])
     await sleep(8)
     await request(bot.obs_websocket, set_scene, name)
+    bot.timer['time'] = datetime.utcnow()
+    bot.timer.get('semaphore').release()
     return {TEXT: "Meme activated with text '{}'!".format(text)}
 
 
